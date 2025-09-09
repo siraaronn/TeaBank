@@ -335,7 +335,7 @@ async def cancel(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
 
 def main() -> None:
     """Start the bot."""
-    application = ApplicationBuilder().token("8231278561:AAF6CeVyduHhfRHDADVDM227lL0aQzBs0NY").build()
+    application = ApplicationBuilder().token("8269858043:AAEy8eFLagz9JU99KkqnZ4rN0SOnfGrPpZU").build()
 
     conv_handler = ConversationHandler(
         entry_points=[
@@ -369,4 +369,5 @@ def main() -> None:
     application.run_polling(allowed_updates=Update.ALL_TYPES)
 
 if __name__ == "__main__":
+
     main()
